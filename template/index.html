@@ -7,18 +7,15 @@ $def with (params)
 	<div id="content">
 		<div class="container">
 			<div class="row">
-				<div class="span6">
+				<div class="col-md-8">
 					<div id="excerpts">
 					$for entry in params.entries:
 						$:render.modules.excerpt(entry)
 					</div>
 					$:render.modules.pager(params.pager)
 				</div>
-				<div class="span3">
+				<div class="col-md-4">
 					$:render.layout.three.primary(params.primary)
-				</div>
-				<div class="span3">
-					$:render.layout.three.secondary(params.secondary)
 				</div>
 			</div>
 		</div>

@@ -77,6 +77,7 @@ class Entry(object):
             else:
                 return render.entry(params)
         params = entryService.search(entryService.types.index, url)
+        print params
         return render.index(params)
 
 
@@ -140,7 +141,7 @@ class About(object):
         params = entryService.find_by_url(entryService.types.page, url)
         if params.entry == None:
             raise web.notfound(render.error(params))
-        return render.entry(params)
+        return render.about(params)
 
 
 class Subscribe(object):

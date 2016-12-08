@@ -10,7 +10,7 @@ history:
 import web
 
 blogconfig = web.storage(
-    name='Pastime Paradise',
+    name='CLOUD',
     home='http://dylanninin.com',
     author='dylan',
     disqus='"webpymdblog"',

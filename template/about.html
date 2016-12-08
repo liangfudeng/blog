@@ -1,0 +1,18 @@
+$def with (params)
+<!DOCTYPE html>
+<html lang='zh'>
+	$:render.layout.header(config.name)
+<body>
+    $:render.layout.navbar()
+	<div id="content">
+		<div class="container">
+			<ul>
+			<li>$config.name</li>
+			<li>$config.home</li>
+			<li>$config.author</li>
+			</ul>
+		</div>
+	</div>
+	$:render.layout.footer()
+</body>
+</html>
