@@ -231,7 +231,7 @@ class Models(object):
         }
         return Dict2Object(model)
 
-    def category(self, category, url):
+    def category(self, category, url, name):
         """
         category model
 
@@ -247,7 +247,7 @@ class Models(object):
             'count': 1,
             'rank': 1,
             'subs': [],
-            'urls': [url]
+            'urls': [(url, name)]
         }
         return Dict2Object(model)
 

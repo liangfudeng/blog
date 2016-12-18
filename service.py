@@ -164,7 +164,7 @@ class EntryService(object):
         """
         for entry in entries:
             self._init_tag(init_type, entry.url, entry.tags)
-            self._init_category(init_type, entry.url, entry.categories)
+            self._init_category(init_type, entry.url, entry.categories, entry)
             self._init_monthly_archive(init_type, entry.url)
         self.urls = sorted(self.entries.keys(), reverse=True)
         self._init_params()
@@ -199,7 +199,7 @@ class EntryService(object):
                     if self.by_tags[tag].count == 0:
                         self.by_tags.pop(tag)
 
-    def _init_category(self, init_type, url, categories):
+    def _init_category(self, init_type, url, categories, entry):
         """
         Initialize categories
         """
@@ -207,16 +207,16 @@ class EntryService(object):
             if category not in self.by_categories:
                 if init_type == self.types.add:
                     self.by_categories[category] = \
-                        self.models.category(category, url)
+                        self.models.category(category, url, entry.name)
                 if init_type == self.types.delete:
                     pass
             else:
                 if init_type == self.types.add:
-                    self.by_categories[category].urls.insert(0, url)
+                    self.by_categories[category].urls.insert(0, (url, entry.name))
                     self.by_categories[category].count += 1
                 if init_type == self.types.delete:
                     self.by_categories[category].count -= 1
-                    self.by_categories[category].urls.remove(url)
+                    self.by_categories[category].urls.remove((url, entry.name))
                     if self.by_categories[category].count == 0:
                         self.by_categories.pop(category)
 
@@ -525,6 +525,9 @@ class EntryService(object):
         self.params.pager = self._paginate(search_type, value, total, start, limit)
         self.params.primary.abouts = self._init_abouts_widget(abouts)
         return self.params
+
+    def get_all_catagories(self):
+        return self.by_categories
 
     def error(self, url):
         """

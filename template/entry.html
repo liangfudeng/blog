@@ -7,17 +7,12 @@ $def with (params)
 	<div id="content">
 		<div class="container">
 			<div class="row">
-				<div class="span9">
+				<div>
 					$:render.modules.entry(params.entry)
-					<h3>$:render.modules.comment()	</h3>
-				</div>
-				<div class="span3">
-					$:render.layout.three.primary(params.primary)
 				</div>
 			</div>
 		</div>
 	</div>
-	$:render.misc.analytics()
 	$:render.layout.footer()
 </body>
 </html>

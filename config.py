@@ -11,8 +11,9 @@ import web
 
 blogconfig = web.storage(
     name='CLOUD',
-    home='http://dylanninin.com',
+    home='/',
     author='dylan',
+    category_url='/category.html',
     disqus='"webpymdblog"',
     google_analytics='"UA-21870463-1"',
     template_dir='template',
@@ -25,7 +26,7 @@ blogconfig = web.storage(
     index_url='/',
     entry_url='/blog',
     tweet_url='/tweet',
-    archive_url='/archive',
+    archive_url='/archive.html',
     about_url='/about.html',
     subscribe_url='/atom.xml',
     error_url='/error.html',
@@ -58,6 +59,7 @@ urls = (
     blogconfig.index_url + '/?', 'controller.Index',
     blogconfig.entry_url + '(.*)', 'controller.Entry',
     blogconfig.archive_url + '(.*)', 'controller.Archive',
+    blogconfig.category_url, 'controller.Category',
     blogconfig.about_url, 'controller.About',
     blogconfig.subscribe_url, 'controller.Subscribe',
     blogconfig.search_url + '?(.+)', 'controller.Search',

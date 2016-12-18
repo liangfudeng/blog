@@ -7,15 +7,12 @@ $def with (params)
 	<div id="content">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
+				<div>
 					<div id="excerpts">
 					$for entry in params.entries:
 						$:render.modules.excerpt(entry)
 					</div>
 					$:render.modules.pager(params.pager)
-				</div>
-				<div class="col-md-4">
-					$:render.layout.three.primary(params.primary)
 				</div>
 			</div>
 		</div>
@@ -23,3 +20,5 @@ $def with (params)
 	$:render.layout.footer()
 </body>
 </html>
+
+<!--http://caibaojian.com/bootstrap-mosonry.html-->

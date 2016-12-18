@@ -7,16 +7,7 @@ $def with (params)
 	<div id="content">
 		<div class="container">
 			<div class="row">
-				<div class="span6">
-					$:render.modules.error(params.error)
-					$:render.misc.ads.ad()
-				</div>
-				<div class="span3">
-					$:render.layout.three.primary(params.primary)
-				</div>
-				<div class="span3">
-					$:render.layout.three.secondary(params.secondary)
-				</div>
+				$:render.modules.error(params.error)
 			</div>
 		</div>
 	</div>

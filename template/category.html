@@ -1,0 +1,39 @@
+$def with (categorys)
+<!DOCTYPE html>
+<html lang='zh'>
+	$:render.layout.header(config.name)
+<body>
+    $:render.layout.navbar()
+	<div id="content">
+		<div class="container">
+			<div class="row">
+				$for name,category in categorys.items():
+					<div class="container-fluid">
+						<div class="accordion" id="accordion2">
+							<div class="accordion-group">
+								<div class="accordion-heading">
+									<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#$name">
+										$name ($category.count)
+									</a>
+								</div>
+								<div id="$name" class="accordion-body collapse" style="height: 0px; ">
+									<div class="accordion-inner">
+										<ul>
+										$for url in category.urls:
+											<li><a href="$url[0]">$url[1]</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
+$:render.layout.footer()
+
+

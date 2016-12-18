@@ -17,6 +17,10 @@ web = config.web
 config = config.blogconfig
 
 
+def save_html(content, path):
+    open(path, 'w').write(content)
+
+
 class Index(object):
     """
     Index Handler for /?
@@ -44,7 +48,25 @@ class Index(object):
         limit = int(params.limit)
         start = int(params.start)
         params = entryService.search(entryService.types.index, config.index_url, '', start, limit)
+        save_html(str(render.index(params)), os.path.join('html', 'index.html'))
         return render.index(params)
+
+
+class Category(object):
+    """
+    Category Handler for /category?
+
+    template:
+        template/category.html
+
+    reference:
+        config.py, model.py, service.py
+    """
+
+    def GET(self):
+        all_categorys = entryService.get_all_catagories()
+        save_html(str(render.category(all_categorys)), os.path.join("html", 'category.html'))
+        return render.category(all_categorys)
 
 
 class Entry(object):
@@ -69,15 +91,25 @@ class Entry(object):
     """
 
     def GET(self, url):
-        if not url in ['', '/']:
+        print url
+        for it in entryService.urls:
+            params = entryService.find_by_url(entryService.types.entry, it)
+            dir = os.path.join('html', "." + os.path.dirname(it))
+            print dir
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            else:
+                print "exist"
+            save_html(str(render.entry(params)), os.path.join('html', "." + it))
+
+        if url not in ['', '/']:
             url = config.entry_url + url
             params = entryService.find_by_url(entryService.types.entry, url)
-            if params.entry == None:
+            if params.entry is None:
                 raise web.notfound(render.error(params))
             else:
                 return render.entry(params)
         params = entryService.search(entryService.types.index, url)
-        print params
         return render.index(params)
 
 
@@ -120,8 +152,9 @@ class Archive(object):
     def GET(self, url):
         url = config.archive_url + url
         params = entryService.archive(entryService.types.entry, url)
-        if params.entries == None:
+        if params.entries is None:
             raise web.notfound(render.error(params))
+        save_html(str(render.archive(params)), os.path.join('html', 'archive.html'))
         return render.archive(params)
 
 
@@ -139,9 +172,10 @@ class About(object):
     def GET(self):
         url = config.about_url
         params = entryService.find_by_url(entryService.types.page, url)
-        if params.entry == None:
+        if params.entry is None:
             raise web.notfound(render.error(params))
-        return render.about(params)
+        save_html(str(render.entry(params)), os.path.join("html", 'about.html'))
+        return render.entry(params)
 
 
 class Subscribe(object):
