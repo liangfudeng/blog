@@ -17,10 +17,6 @@ web = config.web
 config = config.blogconfig
 
 
-def save_html(content, path):
-    open(path, 'w').write(content)
-
-
 class Index(object):
     """
     Index Handler for /?
@@ -48,7 +44,6 @@ class Index(object):
         limit = int(params.limit)
         start = int(params.start)
         params = entryService.search(entryService.types.index, config.index_url, '', start, limit)
-        save_html(str(render.index(params)), os.path.join('html', 'index.html'))
         return render.index(params)
 
 
@@ -65,7 +60,6 @@ class Category(object):
 
     def GET(self):
         all_categorys = entryService.get_all_catagories()
-        save_html(str(render.category(all_categorys)), os.path.join("html", 'category.html'))
         return render.category(all_categorys)
 
 
@@ -91,17 +85,6 @@ class Entry(object):
     """
 
     def GET(self, url):
-        print url
-        for it in entryService.urls:
-            params = entryService.find_by_url(entryService.types.entry, it)
-            dir = os.path.join('html', "." + os.path.dirname(it))
-            print dir
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            else:
-                print "exist"
-            save_html(str(render.entry(params)), os.path.join('html', "." + it))
-
         if url not in ['', '/']:
             url = config.entry_url + url
             params = entryService.find_by_url(entryService.types.entry, url)
@@ -154,7 +137,6 @@ class Archive(object):
         params = entryService.archive(entryService.types.entry, url)
         if params.entries is None:
             raise web.notfound(render.error(params))
-        save_html(str(render.archive(params)), os.path.join('html', 'archive.html'))
         return render.archive(params)
 
 
@@ -174,7 +156,6 @@ class About(object):
         params = entryService.find_by_url(entryService.types.page, url)
         if params.entry is None:
             raise web.notfound(render.error(params))
-        save_html(str(render.entry(params)), os.path.join("html", 'about.html'))
         return render.entry(params)
 
 
